@@ -3,8 +3,8 @@ package com.kuaishou.libertydb.common.util;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 import static org.apache.commons.lang3.StringUtils.isNotBlank;
 
-import com.kuaishou.libertydb.common.SupplierLazy;
-import com.kuaishou.libertydb.common.logger.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author zhaozhenhang <zhaozhenhang@kuaishou.com>
@@ -13,7 +13,7 @@ import com.kuaishou.libertydb.common.logger.Logger;
 @FunctionalInterface
 public interface ParamChecker<T> {
 
-    Logger logger = SupplierLazy.lazy(Logger::new).get();
+    Logger logger = LoggerFactory.getLogger(ParamChecker.class);
 
     static ParamChecker<String> notBlankChecker(String errorMsg) {
         return param -> isBlank(param) ? errorMsg : null;
@@ -24,7 +24,7 @@ public interface ParamChecker<T> {
     default String validateWithLog(T data) {
         String errorInfo = validate(data);
         if (isNotBlank(errorInfo)) {
-            logger.warn("invalid param: ");
+            logger.warn("invalid param: {}", data);
         }
         return errorInfo;
     }

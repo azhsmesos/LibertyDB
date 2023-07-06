@@ -15,7 +15,7 @@ public class CheckParamUtil {
         boolean checker = Arrays.stream(param).allMatch(it ->
                 checkerChain.put(notBlankChecker("参数不可为null"), it).validate() == null);
         if (checker) {
-
+            // todo 校验处理
         }
     }
 }

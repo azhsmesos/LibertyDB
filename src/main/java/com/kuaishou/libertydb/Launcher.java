@@ -1,6 +1,7 @@
 package com.kuaishou.libertydb;
 
 import static com.kuaishou.libertydb.common.Error.InvalidMemException;
+import static com.kuaishou.libertydb.common.util.CheckParamUtil.checkParamIsNotBlank;
 import static com.kuaishou.libertydb.tm.TransactionManager.create;
 import static com.kuaishou.libertydb.tm.TransactionManager.open;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -9,10 +10,10 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.kuaishou.libertydb.common.ForceExit;
-import com.kuaishou.libertydb.common.SupplierLazy;
-import com.kuaishou.libertydb.common.logger.Logger;
 import com.kuaishou.libertydb.tm.TransactionManager;
 
 /**
@@ -22,12 +23,12 @@ import com.kuaishou.libertydb.tm.TransactionManager;
 public class Launcher {
 
     public static final int port = 9999;
-    public static final long DEFAULT_MEM = (1<<20)*64;
+    public static final long DEFAULT_MEM = (1 << 20) * 64;
     public static final long KB = 1 << 10;
     public static final long MB = 1 << 20;
     public static final long GB = 1 << 30;
 
-    private static final Logger logger = SupplierLazy.lazy(Logger::new).get();
+    private static final Logger logger = LoggerFactory.getLogger(Launcher.class);
 
     public static void main(String[] args) {
         try {
@@ -66,16 +67,16 @@ public class Launcher {
         if (isBlank(memStr)) {
             return DEFAULT_MEM;
         }
-
-        String unit = memStr.substring(memStr.length()-2);
-        long memNum = Long.parseLong(memStr.substring(0, memStr.length()-2));
-        switch(unit) {
+        checkParamIsNotBlank(memStr);
+        String unit = memStr.substring(memStr.length() - 2);
+        long memNum = Long.parseLong(memStr.substring(0, memStr.length() - 2));
+        switch (unit) {
             case "KB":
-                return memNum*KB;
+                return memNum * KB;
             case "MB":
-                return memNum*MB;
+                return memNum * MB;
             case "GB":
-                return memNum*GB;
+                return memNum * GB;
             default:
                 ForceExit.exit(InvalidMemException);
         }
