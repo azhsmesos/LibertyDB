@@ -66,6 +66,7 @@ public class Launcher {
         if (isBlank(memStr)) {
             return DEFAULT_MEM;
         }
+
         String unit = memStr.substring(memStr.length()-2);
         long memNum = Long.parseLong(memStr.substring(0, memStr.length()-2));
         switch(unit) {

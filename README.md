@@ -2,13 +2,14 @@ LibertyDB 寓意自由，我性格较为自由随意洒脱，用Java写的时候
 
 注意，该项目参考自 mydb
 
-执行
+编译执行
 ```agsl
 mvn compile
 ```
 
+创建数据库
 ```agsl
-
+mvn exec:java -Dexec.mainClass="com.kuaishou.libertydb.Launcher" -Dexec.args="-create /tmp/libertydb"
 ```
 
 

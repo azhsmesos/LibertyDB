@@ -12,7 +12,7 @@ import java.util.Date;
  * @author zhaozhenhang <zhaozhenhang@kuaishou.com>
  * Created on 2023-07-06
  */
-public class Logger {
+public class Logger<T> {
 
     private static LogLevel logLevel = LogLevel.INFO;
     // 默认日志文件路径为 /tmp/liberty/log/log.txt/tmp/liberty/log/log.txt
@@ -54,23 +54,23 @@ public class Logger {
         }
     }
 
-    public void debug(String message) {
+    public void debug(T message) {
         log(LogLevel.DEBUG, message);
     }
 
-    public void info(String message) {
+    public void info(T message) {
         log(LogLevel.INFO, message);
     }
 
-    public void warn(String message) {
+    public void warn(T message) {
         log(LogLevel.WARN, message);
     }
 
-    public void error(String message) {
+    public void error(T message) {
         log(LogLevel.ERROR, message);
     }
 
-    private void log(LogLevel level, String message) {
+    private void log(LogLevel level, T message) {
         if (level.ordinal() >= logLevel.ordinal()) {
             String logMessage = "[" + level.toString() + "] " + new Date() + ": " + message + "\n";
             writeToFile(logMessage);
